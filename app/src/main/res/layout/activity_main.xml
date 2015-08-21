@@ -8,19 +8,21 @@
     tools:context=".MainActivity"
     android:transitionGroup="true">
 
+    <!--
     <TextView android:text="Bluetooth Example" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textview"
         android:textSize="35dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+    -->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tutorials point"
+        android:text="Vô fulano"
         android:id="@+id/textView"
-        android:layout_below="@+id/textview"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="#ff7aff24"
         android:textSize="35dp" />
@@ -39,11 +41,11 @@
         android:layout_height="wrap_content"
         android:text="Turn On"
         android:id="@+id/button1"
-        android:layout_below="@+id/imageView"
-        android:layout_toStartOf="@+id/imageView"
-        android:layout_toLeftOf="@+id/imageView"
         android:clickable="true"
-        android:onClick="on" />
+        android:onClick="on"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -60,9 +62,9 @@
         android:text="List devices"
         android:onClick="list"
         android:id="@+id/button3"
-        android:layout_below="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_above="@+id/button6"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -72,7 +74,27 @@
         android:id="@+id/button4"
         android:layout_below="@+id/button1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send"
+        android:onClick="send"
+        android:id="@+id/button5"
+        android:layout_below="@+id/button3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="connect"
+        android:onClick="connect"
+        android:id="@+id/button6"
+        android:layout_below="@+id/button2"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
 
     <ListView
         android:layout_width="wrap_content"
