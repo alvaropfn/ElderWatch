@@ -2,9 +2,12 @@ package com.alvaropfn.elderwatch;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +16,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private Set<BluetoothDevice> paireds;
     ListView lsView;
     /*##################################*/
+    UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    private BluetoothSocket socket;
+    private InputStream instream = null;
+    private OutputStream outstream = null;
+    int i = 0;
 
 
     @Override
@@ -84,8 +96,44 @@ public class MainActivity extends AppCompatActivity {
         lsView.setAdapter(lsAdapter);
     }
 
-    public void connect()
+    public  void send(View v) {
+        if(socket == null)
+        {
+            connect(v);
+            this.send(v);
+        }
+        else
+        {
+            try
+            {
+                String msg = "p";
+                System.out.println("p" + i);
+                outstream.write(msg.getBytes());
+            }
+            catch (IOException e)
+            {
+                Toast.makeText(getApplicationContext(), "Fail while send msg: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+    public void connect(View v)
     {
+        String adress = "00:13:12:25:70:84";
+
+        try
+        {
+            device = adapter.getRemoteDevice(adress);
+            socket = device.createRfcommSocketToServiceRecord(uuid);
+            socket.connect();
+            instream = socket.getInputStream();
+            outstream = socket.getOutputStream();
+        }
+        catch(IOException e)
+        {
+            Toast.makeText(getApplicationContext(), "A error ocurr: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
     }
 
