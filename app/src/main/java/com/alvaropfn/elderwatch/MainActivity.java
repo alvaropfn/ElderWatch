@@ -1,40 +1,35 @@
 package com.alvaropfn.elderwatch;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.UUID;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-public class MainActivity extends AppCompatActivity {
-
-    BluetoothAdapter adapter = null;
+public class MainActivity extends Activity {
+    Button on_btn, off_btn, send_btn, list_btn, connect_btn;
+    BluetoothController bc;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        adapter = BluetoothAdapter.getDefaultAdapter();
-        if(!adapter.isEnabled())
-        {
-            Intent enableBlue
-        }
-    }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        on_btn = (Button) findViewById(R.id.on_btn);
+        off_btn = (Button) findViewById(R.id.off_btn);
+        send_btn = (Button) findViewById(R.id.send_btn);
+        list_btn = (Button) findViewById(R.id.list_btn);
+        connect_btn = (Button) findViewById(R.id.connect_btn);
+
+        lv = (ListView) findViewById(R.id.listView);
+
+        bc = new BluetoothController();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -42,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -54,5 +50,35 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void turnOn(View view)
+    {
+        bc.enable(this, this.getApplicationContext());
+    }
 
+    public void turnOff(View view)
+    {
+        bc.disable(this.getApplicationContext());
+    }
+
+    public  void connect(View view)
+    {
+        String adress = "00:13:12:25:70:84";
+        bc.connect(getApplicationContext(), adress);
+    }
+
+    public void send(View view)
+    {
+        bc.send(getApplicationContext(), "a");
+        bc.read(getApplicationContext());
+    }
+
+    public void clickItem(View view)
+    {
+
+    }
+
+    public void listDevices(View view)
+    {
+        bc.listDevices(getApplicationContext(), lv);
+    }
 }

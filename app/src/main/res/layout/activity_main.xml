@@ -8,15 +8,6 @@
     tools:context=".MainActivity"
     android:transitionGroup="true">
 
-    <!--
-    <TextView android:text="Bluetooth Example" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview"
-        android:textSize="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-    -->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,70 +31,59 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Turn On"
-        android:id="@+id/button1"
+        android:id="@+id/on_btn"
         android:clickable="true"
-        android:onClick="on"
-        android:layout_below="@+id/imageView"
+        android:onClick="turnOn"
+        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get visible"
-        android:onClick="visible"
-        android:id="@+id/button2"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="List devices"
-        android:onClick="list"
-        android:id="@+id/button3"
-        android:layout_above="@+id/button6"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="turn off"
-        android:onClick="off"
-        android:id="@+id/button4"
-        android:layout_below="@+id/button1"
+        android:onClick="turnOff"
+        android:id="@+id/off_btn"
+        android:layout_below="@+id/on_btn"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List"
+        android:onClick="listDevices"
+        android:id="@+id/list_btn"
+        android:layout_above="@+id/send_btn"
+        android:layout_alignLeft="@+id/connect_btn"
+        android:layout_alignStart="@+id/connect_btn" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="send"
         android:onClick="send"
-        android:id="@+id/button5"
-        android:layout_below="@+id/button3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/send_btn"
+        android:layout_below="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="connect"
         android:onClick="connect"
-        android:id="@+id/button6"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:id="@+id/connect_btn"
+        android:layout_above="@+id/off_btn"
+        android:layout_alignRight="@+id/listView"
+        android:layout_alignEnd="@+id/listView" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignStart="@+id/button1"
-        android:layout_below="@+id/textView2" />
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,8 +92,10 @@
         android:id="@+id/textView2"
         android:textColor="#ff34ff06"
         android:textSize="25dp"
-        android:layout_below="@+id/button4"
-        android:layout_alignLeft="@+id/listView"
-        android:layout_alignStart="@+id/listView" />
+        android:onClick="clickItem"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="46dp" />
 
 </RelativeLayout>
