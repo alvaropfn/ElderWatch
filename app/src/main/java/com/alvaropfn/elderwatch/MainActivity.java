@@ -14,12 +14,13 @@ public class MainActivity extends Activity {
     BluetoothController bc;
     ListView lv;
 
+    long nxtSecond;
+    Thread thread;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         on_btn = (Button) findViewById(R.id.on_btn);
         off_btn = (Button) findViewById(R.id.off_btn);
         send_btn = (Button) findViewById(R.id.send_btn);
@@ -27,8 +28,8 @@ public class MainActivity extends Activity {
         connect_btn = (Button) findViewById(R.id.connect_btn);
 
         lv = (ListView) findViewById(R.id.listView);
-
         bc = new BluetoothController();
+
     }
 
     @Override
@@ -43,7 +44,7 @@ public class MainActivity extends Activity {
     {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //no inspection Simplifiable If Statement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -68,8 +69,27 @@ public class MainActivity extends Activity {
 
     public void send(View view)
     {
-        bc.send(getApplicationContext(), "a");
+        bc.write(getApplicationContext(), "a");
         bc.read(getApplicationContext());
+
+        /*
+        nxtSecond = System.currentTimeMillis();
+        System.out.println(nxtSecond);
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(bc.isConnected() && System.currentTimeMillis() > nxtSecond + 1000)
+                {
+                    bc.write(getApplicationContext(),  "" + nxtSecond);
+                    bc.read(getApplicationContext());
+                    System.out.println(nxtSecond);
+                }
+            }
+        });
+        thread.start();
+        thread.run();
+        */
+
     }
 
     public void clickItem(View view)
@@ -80,5 +100,6 @@ public class MainActivity extends Activity {
     public void listDevices(View view)
     {
         bc.listDevices(getApplicationContext(), lv);
+
     }
 }

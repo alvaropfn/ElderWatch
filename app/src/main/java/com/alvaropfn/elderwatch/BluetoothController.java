@@ -16,11 +16,13 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Handler;
+
 
 /**
  * Created by Alvaro on 21/08/2015.
  */
-public class BluetoothController
+public class BluetoothController extends Thread
 {
     BluetoothAdapter adapter;
     BluetoothDevice device;
@@ -28,11 +30,16 @@ public class BluetoothController
     InputStream intStream;
     OutputStream outStream;
     Set<BluetoothDevice> paireds;
-
+    boolean connected;
 
     public BluetoothController()
     {
         adapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
+    public boolean isConnected()
+    {
+        return connected;
     }
 
     public void enable(Activity dad, Context ctx)
@@ -52,6 +59,7 @@ public class BluetoothController
     public void disable(Context ctx)
     {
         adapter.disable();
+        connected = false;
         Toast.makeText(ctx,"Bluetooth turned OFF", Toast.LENGTH_SHORT).show();
     }
 
@@ -78,6 +86,7 @@ public class BluetoothController
 
     public void connect(Context ctx, String adress)
     {
+        fetchDevices();
         for (BluetoothDevice pd : paireds)
         {
             if(pd.getAddress().equals(adress))
@@ -90,6 +99,7 @@ public class BluetoothController
                     socket.connect();
                     intStream = socket.getInputStream();
                     outStream = socket.getOutputStream();
+                    connected = true;
                     Toast.makeText(ctx, "connection sucessful: " + pd.getName() , Toast.LENGTH_LONG).show();
                     break;
                 }
@@ -103,7 +113,7 @@ public class BluetoothController
 
     }
 
-    public void send(Context ctx, String msg)
+    public void write(Context ctx, String msg)
     {
         msg += "\n";
         try {
@@ -131,7 +141,7 @@ public class BluetoothController
             {
                 byte[] buf = new byte[1024];
                 intStream.read(buf);
-                System.out.println("sending: ");//debug
+                System.out.println("received: ");//debug
                 Toast.makeText(ctx, "received: " + new String(buf), Toast.LENGTH_SHORT).show();
             }
 
